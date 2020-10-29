@@ -12,6 +12,12 @@ on:
         default: 'not given'
         
 jobs:
+  printBranch:
+    - name: Message
+    run: |
+        echo "${{ github.event.inputs.branch }}"
+        echo "${{ github.event.inputs.guide_name }}"
+
   convertMaster:
     name: Output message
     runs-on: ubuntu-latest
