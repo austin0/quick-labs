@@ -15,7 +15,7 @@ jobs:
   convertMaster:
     name: Output message
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.branch == 'master' }}
+    if: contains(github.event.inputs.branch, 'master')
   
     steps:
 
@@ -54,7 +54,7 @@ jobs:
   convertStaging:
     name: Output message
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.branch == 'qa' }} 
+    if: contains(github.event.inputs.branch, 'qa')
   
     steps:
 
