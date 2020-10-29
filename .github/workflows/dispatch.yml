@@ -46,14 +46,14 @@ jobs:
           git commit -m "Updated by github actions from ${{ github.event.inputs.guide_name }}"
     
       - uses: peter-evans/create-pull-request@v3
-        with:
-            title: "Change to ${{ github.event.inputs.guide_name }}"
-            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
-            branch: "${{ github.event.inputs.guide_name }}/actions"
-            base: "master" 
-        name: Create Pull Request
+      with:
+          title: "Change to ${{ github.event.inputs.guide_name }}"
+          body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
+          branch: "${{ github.event.inputs.guide_name }}/actions"
+          base: "master" 
+      name: Create Pull Request
 
-convertStaging:
+  convertStaging:
     name: Output message
     runs-on: ubuntu-latest
     if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")   
@@ -87,10 +87,10 @@ convertStaging:
           git commit -m "Updated by github actions from ${{ github.event.inputs.guide_name }}"
     
       - uses: peter-evans/create-pull-request@v3
-        with:
-            title: "Change to ${{ github.event.inputs.guide_name }}"
-            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
-            branch: "${{ github.event.inputs.guide_name }}/actions"
-            base: "staging" 
-        name: Create Pull Request
+      with:
+          title: "Change to ${{ github.event.inputs.guide_name }}"
+          body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
+          branch: "${{ github.event.inputs.guide_name }}/actions"
+          base: "staging" 
+      name: Create Pull Request
 
