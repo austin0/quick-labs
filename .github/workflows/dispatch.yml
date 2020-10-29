@@ -26,3 +26,34 @@ jobs:
         run: |
           echo "${{ github.event.inputs.branch }}"
           echo "${{ github.event.inputs.guide_name }}"
+
+      - name: Run Converter
+        run: |
+          git init
+          mkdir -p instructions/${{ github.event.inputs.guide_name }}/
+          rm -f instructions/${{ github.event.inputs.guide_name }}/README.md
+          javac GuideConverter.java
+          java GuideConverter ${{ github.event.inputs.guide_name }}
+          rm -f temp.adoc
+          rm -f GuideConverter.class
+          mv ${{ github.event.inputs.guide_name }}.md instructions/${{ github.event.inputs.guide_name }}/instructions.md
+          git add .
+          git config --global user.email "GuidesBot@OpenLiberty.io"
+          git config --global user.name "GuidesBot"
+          git commit -m "Updated by github actions from ${{ github.event.inputs.guide_name }}"
+          
+      - name: Create Pull Request (Master)
+        if: contains(${{ github.event.inputs.branch }}, "master") || contains(${{ github.event.inputs.branch }}, "dev")
+        uses: peter-evans/create-pull-request@v3
+        with:
+           title: "Change to ${{ github.event.inputs.guide_name }}"
+           body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
+           branch: "master"
+     
+      - name: Create Pull Request (Master)
+        if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")
+        uses: peter-evans/create-pull-request@v3
+        with:
+           title: "Change to ${{ github.event.inputs.guide_name }}-staging"
+           body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
+           branch: "staging"
