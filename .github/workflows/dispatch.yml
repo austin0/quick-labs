@@ -26,6 +26,16 @@ jobs:
         run: |
           echo "${{ github.event.inputs.branch }}"
           echo "${{ github.event.inputs.guide_name }}"
+          
+      - name: test if staging
+        if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")
+        run: |
+          echo "THIS IS THE STAGING ONE"
+          
+      - name: test if master
+        if: contains(${{ github.event.inputs.branch }}, "master") || contains(${{ github.event.inputs.branch }}, "dev")
+        run: |
+          echo "THIS IS THE MASTER ONE"
 
       - name: Run Converter
         run: |
@@ -43,7 +53,7 @@ jobs:
           git commit -m "Updated by github actions from ${{ github.event.inputs.guide_name }}"
           
       - uses: peter-evans/create-pull-request@v3
-        if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")
+        if: contains(${{ github.event.inputs.branch }}, "master") || contains(${{ github.event.inputs.branch }}, "dev")
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
