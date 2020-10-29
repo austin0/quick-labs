@@ -10,17 +10,17 @@ on:
         description: 'boolean degg value'
         required: false
         
-  jobs:
-    deploy:
-      name: Output message
-      runson: ubuntu-latest
+jobs:
+  deploy:
+    name: Output message
+    runs-on: ubuntu-latest
   
-  steps:
+    steps:
 
-    # Any prerequisite steps
-    - uses: actions/checkout@master
+      # Any prerequisite steps
+      - uses: actions/checkout@master
 
-    # Print message
-    - name: Message
-      run: |
-        echo "${{ github.event.inputs.message }}"
+      # Print message
+      - name: Message
+        run: |
+          echo "${{ github.event.inputs.message }}"
