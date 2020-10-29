@@ -42,20 +42,20 @@ jobs:
           git config --global user.name "GuidesBot"
           git commit -m "Updated by github actions from ${{ github.event.inputs.guide_name }}"
           
-      - name: Create Pull Request (Master)
-        uses: peter-evans/create-pull-request@v3
-        if: contains(${{ github.event.inputs.branch }}, "master") || contains(${{ github.event.inputs.branch }}, "dev")
+      - uses: peter-evans/create-pull-request@v3
+        if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
            branch: "${{ github.event.inputs.guide_name }}/actions"
            base: "master" 
-     
-      - name: Create Pull Request (Staging)
-        uses: peter-evans/create-pull-request@v3
+        name: Create Pull Request (Master)
+                    
+      - uses: peter-evans/create-pull-request@v3
         if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}-staging"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
            branch: "${{ github.event.inputs.guide_name }}/actions"
            base: "staging"
+        name: Create Pull Request (Staging)
