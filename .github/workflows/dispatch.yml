@@ -13,13 +13,17 @@ on:
         
 jobs:
   printBranch:
-    - name: Message
-      run: |
-        echo "${{ github.event.inputs.branch }}"
-        echo "${{ github.event.inputs.guide_name }}"
+    runs-on: ubuntu-latest
+
+    steps: 
+
+      - name: Output message
+        run: |
+          echo "${{ github.event.inputs.branch }}"
+          echo "${{ github.event.inputs.guide_name }}"
 
   convertMaster:
-    name: Output message
+    name: Make PR to Master
     runs-on: ubuntu-latest
     if: contains(github.event.inputs.branch, 'master')
   
