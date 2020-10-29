@@ -48,7 +48,7 @@ jobs:
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
-           branch: "${{ github.event.inputs.guide_name }}/${{ github.event.inputs.branch }}"
+           branch: "${{ github.event.inputs.guide_name }}/actions"
            base: "master" 
      
       - name: Create Pull Request (Staging)
@@ -57,5 +57,5 @@ jobs:
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}-staging"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
-           branch: "${{ github.event.inputs.guide_name }}/${{ github.event.inputs.branch }}"
+           branch: "${{ github.event.inputs.guide_name }}/actions"
            base: "staging"
