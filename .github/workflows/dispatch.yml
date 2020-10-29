@@ -48,12 +48,14 @@ jobs:
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
-           branch: "master"
+           branch: "${{ github.event.inputs.guide_name }}/${{ github.event.inputs.branch }}"
+           base: "master" 
      
-      - name: Create Pull Request (Master)
+      - name: Create Pull Request (Staging)
         if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")
         uses: peter-evans/create-pull-request@v3
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}-staging"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
-           branch: "staging"
+           branch: "${{ github.event.inputs.guide_name }}/${{ github.event.inputs.branch }}"
+           base: "staging
