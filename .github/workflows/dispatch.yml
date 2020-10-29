@@ -12,7 +12,7 @@ on:
         default: 'not given'
         
 jobs:
-  deploy:
+  convert:
     name: Output message
     runs-on: ubuntu-latest
   
@@ -20,20 +20,14 @@ jobs:
 
       # Any prerequisite steps
       - uses: actions/checkout@master
+        with:
+          ref: ${{ github.event.inputs.branch }}
 
       # Print message
       - name: Message
         run: |
           echo "${{ github.event.inputs.branch }}"
           echo "${{ github.event.inputs.guide_name }}"
-          
-      - run: |
-          echo "${{ github.event.inputs.branch }} == "master""
-        if: ${{ github.event.inputs.branch }} == "master"
-          
-      - run: |
-          echo "${{ github.event.inputs.branch }} == "qa""
-        if: ${{ github.event.inputs.branch }} == "qa"
 
       - name: Run Converter
         run: |
@@ -49,18 +43,30 @@ jobs:
           git config --global user.email "GuidesBot@OpenLiberty.io"
           git config --global user.name "GuidesBot"
           git commit -m "Updated by github actions from ${{ github.event.inputs.guide_name }}"
+      
+  PR-master:
+    name: PR to master
+    runs-on: ubuntu-latest
+    if: contains(${{ github.event.inputs.branch }}, "master") || contains(${{ github.event.inputs.branch }}, "dev")
+
+    steps:
           
       - uses: peter-evans/create-pull-request@v3
-        if: contains(${{ github.event.inputs.branch }}, "master") || contains(${{ github.event.inputs.branch }}, "dev")
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
            branch: "${{ github.event.inputs.guide_name }}/actions"
            base: "master" 
         name: Create Pull Request (Master)
-                    
+        
+  PR-staging:
+      name: PR to staging
+      runs-on: ubuntu-latest
+      if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")   
+      
+      steps:
+    
       - uses: peter-evans/create-pull-request@v3
-        if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")
         with:
            title: "Change to ${{ github.event.inputs.guide_name }}-staging"
            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
