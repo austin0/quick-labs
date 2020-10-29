@@ -27,14 +27,13 @@ jobs:
           echo "${{ github.event.inputs.branch }}"
           echo "${{ github.event.inputs.guide_name }}"
           
-      - if: ${{ github.event.inputs.branch }} == "master"
-        run: |
+      - run: |
           echo "${{ github.event.inputs.branch }} == "master""
+        if: ${{ github.event.inputs.branch }} == "master"
           
-      - name: test if master
-        if: ${{ github.event.inputs.branch }} == "qa"
-        run: |
+      - run: |
           echo "${{ github.event.inputs.branch }} == "qa""
+        if: ${{ github.event.inputs.branch }} == "qa"
 
       - name: Run Converter
         run: |
