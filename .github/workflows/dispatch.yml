@@ -1,0 +1,26 @@
+name: Message
+on: 
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Log level'     
+        required: true
+        default: 'defaulted'
+      debug:
+        description: 'boolean degg value'
+        required: false
+        
+  jobs:
+    deploy:
+      name: Output message
+      runson: ubuntu-latest
+  
+  steps:
+
+    # Any prerequisite steps
+    - uses: actions/checkout@master
+
+    # Print message
+    - name: Message
+      run: |
+        echo "${{ github.event.inputs.message }}"
