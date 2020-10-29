@@ -1,4 +1,4 @@
-name: Message
+name: PRMaker
 on: 
   workflow_dispatch:
     inputs:
