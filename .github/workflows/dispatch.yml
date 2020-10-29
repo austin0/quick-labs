@@ -27,15 +27,14 @@ jobs:
           echo "${{ github.event.inputs.branch }}"
           echo "${{ github.event.inputs.guide_name }}"
           
-      - name: test if staging
-        if: ${{ github.event.inputs.branch }} == "master"
+      - if: ${{ github.event.inputs.branch }} == "master"
         run: |
-          echo "THIS IS THE STAGING ONE"
+          echo "${{ github.event.inputs.branch }} == "master""
           
       - name: test if master
         if: ${{ github.event.inputs.branch }} == "qa"
         run: |
-          echo "THIS IS THE MASTER ONE"
+          echo "${{ github.event.inputs.branch }} == "qa""
 
       - name: Run Converter
         run: |
