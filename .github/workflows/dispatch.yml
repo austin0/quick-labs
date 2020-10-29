@@ -2,13 +2,14 @@ name: Message
 on: 
   workflow_dispatch:
     inputs:
-      message:
-        description: 'Log level'     
+      branch:
+        description: 'Branch pushed to'     
         required: true
         default: 'defaulted'
-      debug:
-        description: 'boolean degg value'
-        required: false
+      guide_name:
+        description: 'Guide changed'
+        required: true
+        default: 'not given'
         
 jobs:
   deploy:
@@ -23,4 +24,5 @@ jobs:
       # Print message
       - name: Message
         run: |
-          echo "${{ github.event.inputs.message }}"
+          echo "${{ github.event.inputs.branch }}"
+          echo "${{ github.event.inputs.guide_name }}"
