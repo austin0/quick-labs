@@ -28,12 +28,12 @@ jobs:
           echo "${{ github.event.inputs.guide_name }}"
           
       - name: test if staging
-        if: contains(${{ github.event.inputs.branch }}, "staging") || contains(${{ github.event.inputs.branch }}, "qa")
+        if: ${{ github.event.inputs.branch }} == "master"
         run: |
           echo "THIS IS THE STAGING ONE"
           
       - name: test if master
-        if: contains(${{ github.event.inputs.branch }}, "master") || contains(${{ github.event.inputs.branch }}, "dev")
+        if: ${{ github.event.inputs.branch }} == "qa"
         run: |
           echo "THIS IS THE MASTER ONE"
 
