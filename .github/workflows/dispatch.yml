@@ -21,8 +21,6 @@ jobs:
 
       # Any prerequisite steps
       - uses: actions/checkout@master
-        with:
-          ref: ${{ github.event.inputs.branch }}
 
       # Print message
       - name: Message
@@ -62,8 +60,6 @@ jobs:
 
       # Any prerequisite steps
       - uses: actions/checkout@master
-        with:
-          ref: ${{ github.event.inputs.branch }}
 
       # Print message
       - name: Message
