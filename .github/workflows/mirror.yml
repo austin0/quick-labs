@@ -48,7 +48,7 @@ jobs:
 
             if [[ "$status" == "success" ]]; then
                 echo $(jq '.' <<< $pipelineJson)
-                echo"Success - Pipeline passed
+                echo "Success - Pipeline passed"
                 exit 0
             elif [[ "$status" == "failed" ]]; then
                 echo "Pipeline failed, retrying..."
