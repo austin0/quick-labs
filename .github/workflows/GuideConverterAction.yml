@@ -12,6 +12,16 @@ on:
         default: 'guide-rest-into'
   push:
     branches: [ remoteGuideConverter ] 
+      inputs:
+        branch:
+          description: 'Branch pushed to'     
+          required: true
+          default: 'master'
+        guide_name:
+          description: 'Guide changed'
+          required: true
+          default: 'guide-rest-into'
+      
         
 jobs:
   printBranch:
