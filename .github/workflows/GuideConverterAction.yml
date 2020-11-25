@@ -32,7 +32,7 @@ jobs:
 
       # Any prerequisite steps
       - uses: actions/checkout@master
-        ref: 'remoteGuideConverter'
+          ref: 'remoteGuideConverter'
 
       - uses: actions/checkout@v2
         with:
