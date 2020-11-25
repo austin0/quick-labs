@@ -5,23 +5,13 @@ on:
       branch:
         description: 'Branch pushed to'     
         required: true
-        default: 'qa'
+        default: 'remoteGuideConverter'
       guide_name:
         description: 'Guide changed'
         required: true
         default: 'guide-rest-into'
   push:
-    branches: [ remoteGuideConverter ] 
-      inputs:
-        branch:
-          description: 'Branch pushed to'     
-          required: true
-          default: 'master'
-        guide_name:
-          description: 'Guide changed'
-          required: true
-          default: 'guide-rest-into'
-      
+    branches: [ remoteGuideConverter ]     
         
 jobs:
   printBranch:
@@ -37,7 +27,6 @@ jobs:
   convertMaster:
     name: Make PR to Master
     runs-on: ubuntu-latest
-    if: contains(github.event.inputs.branch, 'master')
   
     steps:
 
@@ -47,6 +36,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: 'test-actions/GuideConverter'
+          ref: 'remoteGuideConverter'
 
       - uses: actions/setup-java@v1
         with:
@@ -78,46 +68,4 @@ jobs:
             body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
             branch: "${{ github.event.inputs.guide_name }}/master"
             base: "master" 
-        name: Create Pull Request
-
-  convertStaging:
-    name: Make PR to Staging
-    runs-on: ubuntu-latest
-    if: contains(github.event.inputs.branch, 'qa')
-  
-    steps:
-
-      # Any prerequisite steps
-      - uses: actions/checkout@master
-
-      - uses: actions/checkout@v2
-        with:
-          repository: 'test-actions/GuideConverter'
-
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '11' # The JDK version to make available on the path.
-          java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
-          architecture: x64 # (x64 or x86) - defaults to x64
-
-      - name: Run Converter
-        run: |
-          branchName=${{ github.event.inputs.branch }}
-          git init
-          mkdir -p instructions/${{ github.event.inputs.guide_name }}/
-          rm -f instructions/${{ github.event.inputs.guide_name }}/README.md
-          javac $GITHUB_WORKSPACE/GuideConverter/GuideConverterV2.java
-          java $GITHUB_WORKSPACE/GuideConverter/GuideConverterV2 ${{ github.event.inputs.guide_name }} ${branchName:11}
-          mv $GITHUB_WORKSPACE/GuideConverter/${{ github.event.inputs.guide_name }}.md instructions/${{ github.event.inputs.guide_name }}/instructions.md
-          git add .
-          git config --global user.email "GuidesBot@OpenLiberty.io"
-          git config --global user.name "GuidesBot"
-          git commit -m "Updated by github actions from ${{ github.event.inputs.guide_name }}"
-    
-      - uses: peter-evans/create-pull-request@v3
-        with:
-            title: "Change to ${{ github.event.inputs.guide_name }}"
-            body: "Updated by github actions, triggered by the ${{ github.event.inputs.guide_name }} repo."
-            branch: "${{ github.event.inputs.guide_name }}/staging"
-            base: "staging" 
         name: Create Pull Request
