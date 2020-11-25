@@ -32,11 +32,11 @@ jobs:
 
       # Any prerequisite steps
       - uses: actions/checkout@master
+        ref: 'remoteGuideConverter'
 
       - uses: actions/checkout@v2
         with:
           repository: 'test-actions/GuideConverter'
-          ref: 'remoteGuideConverter'
 
       - uses: actions/setup-java@v1
         with:
